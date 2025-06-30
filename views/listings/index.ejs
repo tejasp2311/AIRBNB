@@ -1,0 +1,85 @@
+<% layout("/layouts/boilerplate") -%>
+<style>
+    #filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 1.5rem;
+        opacity: 0.7;
+    }
+    .filter:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+    .filter p {
+        font-size: 0.8rem;
+    }
+    .hidden-filters {
+        display: none;
+    }
+    @media (max-width: 768px) {
+        .filter:nth-child(n+4) {
+            display: none;
+        }
+        .hidden-filters {
+            display: block;
+        }
+    }
+    @media (min-width: 769px) and (max-width: 992px) {
+        .filter:nth-child(n+6) {
+            display: none;
+        }
+        .hidden-filters {
+            display: block;
+        }
+    }
+</style>
+
+<body>
+    <div id="filters">
+        <!-- Visible Filters -->
+        <div class="filter"><i class="fa-solid fa-fire-flame-curved"></i><p>Trending</p></div>
+        <div class="filter"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+        <div class="filter"><i class="fa-solid fa-mountain-city"></i><p>Modern Cities</p></div>
+        <div class="filter"><i class="fa-solid fa-chess-rook"></i><p>Castles</p></div>
+        <div class="filter"><i class="fa-solid fa-person-swimming"></i><p>Amazing Pools</p></div>
+        <div class="filter"><i class="fa-solid fa-seedling"></i><p>Farmhouses</p></div>
+        <div class="filter"><i class="fa-solid fa-snowflake"></i><p>Arctic</p></div>
+        <div class="filter"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+
+        <!-- Collapsible for hidden filters -->
+        <div class="dropdown hidden-filters">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                More Filters
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item"><i class="fa-solid fa-seedling"></i> Farmhouses</a></li>
+                <li><a class="dropdown-item"><i class="fa-solid fa-snowflake"></i> Arctic</a></li>
+                <li><a class="dropdown-item"><i class="fa-solid fa-campground"></i> Camping</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        <% for(let listing of allListings){ %>
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card cold listing-card">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>" style="height: 20rem;">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text"><b><%= listing.title %></b><br/>
+                            &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : 'N/A' %>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        <% } %> 
+    </div>
+
+    <!-- Bootstrap JS (needed for dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
